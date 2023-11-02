@@ -1,0 +1,16 @@
+<div class="py-4 border">
+  <div class="container">
+    {% assign navigations = "Orders, Addresses, Logout" | split: ", " %}
+    {% assign links = "/account/orders, /account, /account/logout" | split: ", " %}
+    <div class="d-flex justify-content-center align-items-center">
+      {% for nav in navigations %}
+        {% assign active = location.path == links[forloop.index0] %}
+        {% if active %}
+          <a class="link-dark link-offset-2 mx-4">{{ nav }}</a>
+        {% else %}
+          <a href="{{links[forloop.index0]}}" class="link-secondary link-underline-opacity-0 link-underline-opacity-100-hover link-offset-2 mx-4">{{ nav }}</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>

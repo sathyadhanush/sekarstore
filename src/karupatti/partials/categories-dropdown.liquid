@@ -1,0 +1,53 @@
+<div
+  class="w-100 start-0 position-fixed bg-white animate__animated animate__faster d-none border-bottom animate__fadeInDown"
+  style="top: 70px; max-height: 400px; overflow-y: auto;"
+  id="category-dropdown">
+  <div class="container px-5 py-5 text-start">
+    <div class="row">
+      {% assign chunks = categories | chunk: 4 %}
+      {% for chunk in chunks %}
+        <div class="col-3 animate__animated animate__fadeInUp animate__faster">
+          <ul class="nav flex-column">
+            {% for category in chunk %}
+              <li class="nav-item mb-2">
+                <a href="/allproducts?category_id={{ category.id }}" class="link-dark link-underline-opacity-0 link-underline-opacity-100-hover link-offset-2">
+                  {{ category.name | strip }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  const $categoryDropDown = document.getElementById('category-dropdown');
+  const $categoryDropDownTrigger = document.getElementById('category-dropdown-trigger');
+
+  let timeout = null;
+
+  function openCategoryDropDown() {
+    if (timeout !== null) {
+      clearTimeout(timeout);
+      timeout = null;
+      return;
+    }
+    $categoryDropDownTrigger.children[0].classList.add("text-decoration-underline");
+    $categoryDropDown.classList.remove('d-none', 'animate__fadeOutUp');
+    $categoryDropDown.classList.add('animate__fadeInDown');
+  }
+
+  function closeCategoryDropDown(event) {
+    timeout = setTimeout(() => {
+      $categoryDropDownTrigger.children[0].classList.remove("text-decoration-underline");
+      $categoryDropDown.classList.remove('animate__fadeInDown');
+      $categoryDropDown.classList.add('animate__fadeOutUp', 'd-none');
+      timeout = null;
+    }, 50);
+  }
+
+  $categoryDropDownTrigger.addEventListener('mouseenter', openCategoryDropDown);
+  $categoryDropDownTrigger.addEventListener('mouseleave', closeCategoryDropDown);
+</script>

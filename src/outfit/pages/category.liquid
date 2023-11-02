@@ -1,0 +1,69 @@
+{% layout "default.liquid" %}
+
+{% block content %}
+  <div class="container py-5 category-products">
+    <div class="category-content">
+      <h2 class="h2 fw-bold mb-3">{{ category.name }}</h2>
+      <div class="product-grid">
+        {% for product in products %}
+          <a class="product-grid-item" href="/products/{{ product.id }}">
+            {% if product.media[0].url %}
+              <div>
+                <img
+                  style="height: 370px"
+                  src="{{ product.media[0].url }}"
+                  class="img-fluid">
+              </div>
+            {% else %}
+              <div style="height: 370px" class="d-flex flex-column text-white align-items-center bg-secondary-subtle justify-content-center">
+                <ion-icon class="fs-1" name="image"></ion-icon>
+                <span>No Image</span>
+              </div>
+            {% endif %}
+            <div class="p-2">
+              <div class="h6 product-grid-item__title">{{ product.name }}</div>
+              <div class="text-black-50 product-grid-item__price">{{ product.variants[0].price | money_format }}</div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block pagescripts %}
+  <script>
+    const FtoShow = '.filter';
+    const Fpopup = document.querySelector(FtoShow);
+    const Ftrigger = document.querySelector('.filter-trigger');
+    Ftrigger.addEventListener('click', () => {
+      setTimeout(() => {
+        if (! Fpopup.classList.contains('show')) {
+          Fpopup.classList.add('show')
+        }
+      }, 250)
+    })
+    document.addEventListener('click', (e) => {
+      const isClosest = e.target.closest(FtoShow);
+      if (! isClosest && Fpopup.classList.contains('show')) {
+        Fpopup.classList.remove('show')
+      }
+    })
+
+    function updateURL() {
+      const checkedCheckboxes = document.querySelectorAll('.form-check-input:checked');
+      const checkedValues = Array.from(checkedCheckboxes).map(checkbox => checkbox.nextElementSibling.textContent.trim());
+      const categoryID = '{{category.id}}';
+
+      const filterString = checkedValues.map(value => `Brand:${value}`).join('|');
+      const newURL = `/categories/${categoryID}/?filter=${filterString}`;
+
+      const applyButton = document.querySelector('.btn-primary');
+      applyButton.href = newURL;
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const applyButton = document.querySelector('.btn-primary');
+      applyButton.addEventListener('click', updateURL);
+    });
+  </script>
+{% endblock %}

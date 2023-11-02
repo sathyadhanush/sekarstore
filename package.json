@@ -1,0 +1,45 @@
+{
+  "name": "storefront-themes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm run build",
+    "theme:rise": "run-p serve grunt:rise build:lib",
+    "grunt:rise": "grunt rise",
+    "theme:trends": "run-p serve grunt:trends build:lib",
+    "grunt:trends": "grunt trends",
+    "theme:outfit": "run-p serve grunt:outfit lib",
+    "theme:harmony": "run-p serve grunt:harmony lib",
+    "grunt:outfit": "grunt outfit",
+    "theme:karupatti": "run-p serve grunt:karupatti build:lib",
+    "grunt:karupatti": "grunt karupatti",
+    "grunt:harmony": "grunt harmony",
+    "serve": "serve dist",
+    "build:grunt": "grunt copy sass",
+    "lib": "esbuild --watch --bundle src/lib/index.js --outfile=dist/lib.js",
+    "build:lib": "esbuild --bundle --minify src/lib/index.js --outfile=dist/lib.js",
+    "build": "run-s build:grunt build:lib"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "bootstrap": "5.3",
+    "grunt": "^1.6.1",
+    "grunt-cli": "^1.4.3",
+    "grunt-contrib-connect": "^3.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-sass": "^2.0.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "npm-run-all": "^4.1.5",
+    "sass": "^1.63.6",
+    "serve": "^14.2.0",
+    "yup": "^1.2.0"
+  },
+  "devDependencies": {
+    "buffer": "^6.0.3",
+    "esbuild": "^0.18.17"
+  }
+}

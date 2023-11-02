@@ -1,0 +1,105 @@
+{% layout "default.liquid" %}
+
+{% block content %}
+  <section class="breadcrumb">
+    <ul class="breadcrumb__list flex container">
+      <li>
+        <a href="/" class="breadcrumb__link">Home</a>
+      </li>
+      <li>
+        <span class="breadcrumb__link">></span>
+      </li>
+      <li>
+        <span class="breadcrumb__link">Products</span>
+      </li>
+      <li>
+        <span class="breadcrumb__link">></span>
+      </li>
+      <li>
+        <span class="breadcrumb__link">Cart</span>
+      </li>
+    </ul>
+  </section>
+
+  {% if cart.items.length == 0 %}
+    <div class="container my-5 py-5" id="cart-empty">
+      <div class="d-flex flex-column align-items-center">
+        <img
+          style="height: 280px"
+          src="{{ asset_url }}/images/empty-cart.svg"
+          alt="">
+        <div class="mt-5">Your Shopping Bag is empty!</div>
+        <a href="/" class="btn btn-primary btn-lg mt-4 text-uppercase">Start shoppping</a>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if cart.items.size > 0 %}
+    <div class="container py-5" id="cart-items">
+      <h2 class="text-center mb-4 text-uppercase fw-bold">Cart</h2>
+      <div class="container-fluid mt-5">
+        <div class="row">
+          <div class="col-12 col-lg-7 col-xl-8 pe-4">
+            {% for item in cart.items %}
+              <div data-id="{{item.id}}" class="border-bottom">
+                <div class="ps-0 py-4">
+                  <div class="d-flex">
+                    <img
+                      class="image-fluid"
+                      src="{{item.image}}"
+                      style="width: 92px" />
+                    <div class="ms-4">
+                      <div>{{ item.name }}</div>
+                      {% if item.variant %}
+                        <div class="text-secondary mt-4">{{ item.variant }}</div>
+                      {% endif %}
+                      <div class="fw-semibold mt-1">{{ item.price | money_format }}</div>
+                      <div class="border border rounded d-inline-flex mt-2">
+                        <button class="border-0 bg-transparent bg-hover d-flex align-items-center">
+                          <ion-icon
+                            class="fs-5 text-secondary"
+                            name="remove-outline"
+                            data-action="decrement"></ion-icon>
+                        </button>
+                        <span class="px-2 text-secondary">{{ item.quantity }}</span>
+                        <button class="border-0 bg-transparent d-flex align-items-center">
+                          <ion-icon
+                            data-action="increment"
+                            name="add-outline"
+                            class="fs-5 text-secondary"></ion-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="col-12 col-lg-5 col-xl-4 mt-4 mt-lg-0">
+            <h4>Summary</h4>
+            <div class="mt-3">
+              <div class="row mb-2">
+                <div class="col">Subtotal</div>
+                <div class="col text-end">{{ cart.total_amount | money_format }}</div>
+              </div>
+              <div class="row mb-2">
+                <div class="col">Total</div>
+                <div class="col text-end">{{ cart.total_amount | money_format }}</div>
+              </div>
+              <button class="btn btn-lg rounded-pill text-center text-uppercase btn-primary w-100 mt-4" data-action="checkout">
+                Checkout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block pagescripts %}
+  <script>
+    window.__appState.cart = {{cart|json}};
+  </script>
+{% endblock %}

@@ -1,0 +1,120 @@
+{% layout "default.liquid" %}
+
+<div class="modal fade" id="checkout">
+  <div class="modal-dialog">
+    <div class="modal-content d-none" id="checkout-conten">
+      <div class="modal-body">
+        <div id="checkout-content-form">
+          <div class="text-center mb-3">
+            <span class="h4 fw-semibold">Checkout</span>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input class="form-control form-control-lg" name="name">
+          </div>
+          <div class="mb-3">
+            <label for="lastName" class="form-label">Address</label>
+            <input class="form-control form-control-lg" name="address">
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label class="form-label">City</label>
+                <input class="form-control form-control-lg" name="city">
+              </div>
+            </div>
+            <div class="col">
+              <div class="mb-3">
+                <label class="form-label">State</label>
+                <input class="form-control form-control-lg" name="state">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label class="form-label">Country</label>
+                <input class="form-control form-control-lg" name="country">
+              </div>
+            </div>
+            <div class="col">
+              <div class="mb-3">
+                <label class="form-label">Postal code</label>
+                <input class="form-control form-control-lg" name="postal">
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Mobile number</label>
+            <input class="form-control form-control-lg" name="mobile">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <button
+          type="button"
+          class="btn"
+          id="closeModal"
+          data-bs-dismiss="modal">Close</button>
+        <button
+          type="button"
+          class="btn btn-primary btn-lg text-uppercase"
+          id="checkout"
+          onclick="">Continue</button>
+      </div>
+    </div>
+
+    <div class="modal-content" id="checkout-content-login">
+      <div class="modal-body">
+        <div>
+          <div class="text-center mb-3">
+            <span class="h5 fw-semibold text-uppercase">Login or Signup</span>
+          </div>
+          {% render './login-form.liquid' %}
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-content d-none" id="checkout-content-register">
+      <div class="modal-body">
+        <div>
+          <div class="text-center mb-3">
+            <span class="h5 fw-semibold text-uppercase">Login or Signup</span>
+          </div>
+          {% render './register-form.liquid' %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const $checkoutForms = document.querySelectorAll('.modal-content');
+
+  window.onLoginSuccess = async () => {
+    const response = await axios.get('/account');
+    const account = response.data.data;
+    window.account = account;
+    window.location.replace('/checkout');
+  }
+
+  window.handleRegisterOpen = () => {
+    $checkoutForms.forEach(($form) => {
+      if ($form.id === 'checkout-content-register') {
+        $form.classList.remove('d-none');
+      } else {
+        $form.classList.add('d-none');
+      }
+    });
+  }
+
+  window.handleLoginOpen = () => {
+    $checkoutForms.forEach(($form) => {
+      if ($form.id === 'checkout-content-login') {
+        $form.classList.remove('d-none');
+      } else {
+        $form.classList.add('d-none');
+      }
+    });
+  }
+</script>

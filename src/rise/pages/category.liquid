@@ -1,0 +1,22 @@
+{% layout "default.liquid" %}
+
+{% block content %}
+  <div class="container mpy-5 my-5">
+    <h2 class="h2 fw-bold text-uppercase text-center mb-5">{{ category.name }}</h2>
+    <div class="d-flex flex-wrap">
+      {% for product in products %}
+        <a
+          class="d-block text-decoration-none text-black text-center flex-grow-1 product-list-item mb-5 px-2"
+          href="/products/{{ product.id }}"
+          style="border-radius: 4px; width: 250px;">
+          <div class="mx-auto" style="width: 214px; height: 214px">
+            <img src="{{ product.media[0].url }}" class="img-fluid" />
+          </div>
+          <div class="mt-3 fw-semibold">{{ product.name }}</div>
+          <div class="fw-semibold mt-2">{{ product.presentation_price }}</div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+{% endblock %}

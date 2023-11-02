@@ -1,0 +1,85 @@
+<footer class="footer border-top mb-4">
+  <div class="container py-5 px-4">
+    <div class="row row-cols-1 row-cols-lg-3 gap-4 gap-lg-0">
+        <div class="col">
+          {% if store.logo %}
+            <a class="navbar-brand me-auto h-100" href="/" >
+              <img src="{{ store.logo }}" style="max-height: 50px" />
+            </a>
+          {% else %}
+            <a class="navbar-brand me-auto fs-3" href="/" >
+              {{ store.name | upcase }}
+            </a>
+        {% endif %}
+          <div>
+            <div class="nav list-unstyled d-flex mt-4">
+              {% for link in footer.socialLinks %}
+                {% if link | includes: "x.com" %}
+                  <a class="text-dark me-4" href="{{link}}">
+                    <ion-icon name="logo-twitter"></ion-icon>
+                  </a>
+                {% elsif link | includes: "twitter.com" %}
+                  <a class="text-dark me-4" href="{{link}}">
+                    <ion-icon name="logo-twitter"></ion-icon>
+                  </a>
+                {% elsif link | includes: "instagram.com" %}
+                  <a class="text-dark me-4" href="{{link}}">
+                    <ion-icon name="logo-instagram"></ion-icon>
+                  </a>
+                {% elsif link | includes: "youtube.com" %}
+                  <a class="text-dark me-4" href="{{link}}">
+                    <ion-icon name="logo-youtube"></ion-icon>
+                  </a>
+                {% elsif link | includes: "facebook.com" %}
+                  <a class="text-dark me-4" href="{{link}}">
+                    <ion-icon name="logo-facebook"></ion-icon>
+                  </a>
+                {% elsif link | includes: "linkedin.com" %}
+                  <a class="text-dark me-4" href="{{link}}">
+                    <ion-icon name="logo-linkedin"></ion-icon>
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <ul class="nav flex-column">
+            {% if footer.hasInfoLinks %}
+              <li class="mb-2">
+                <h5>Quick Links</h5>
+              </li>
+            {% endif %}
+            {% if footer.hasRefundPolicy %}
+              <li class="nav-item mb-2">
+                <a class="link link-secondary link-underline-opacity-0 link-offset-2 link-underline link-underline-opacity-100-hover px-0" href="/refund-policy">Returns & Refunds</a>
+              </li>
+            {% endif %}
+            {% if footer.hasPrivacyPolicy %}
+              <li class="nav-item mb-2">
+                <a class="link link-secondary link-underline-opacity-0 link-offset-2 link-underline link-underline-opacity-100-hover px-0" href="/privacy-policy">Privacy Notice</a>
+              </li>
+            {% endif %}
+            {% if footer.hasTermsAndConditions %}
+              <li class="nav-item mb-2">
+                <a class="link link-secondary link-underline-opacity-0 link-offset-2 link-underline link-underline-opacity-100-hover px-0" href="/terms">Terms of Service</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+        {% if store.address %}
+          <div class="col" id="contact">
+            <h5>Contact</h5>
+            <p class="text-secondary">{{store.address}}</p>
+          </div>
+        {% endif %}
+    </div>
+  </div>
+  <div class="border-top">
+    <div class="container d-flex text-secondary">
+    <div class="py-5 px-4">
+      <small>© 2023 {{ store.name }} | All Rights Reserved</small>
+    </div>
+  </div>
+  </div>
+</div>

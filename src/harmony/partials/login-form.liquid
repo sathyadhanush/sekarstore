@@ -1,0 +1,47 @@
+<form id="login-form">
+  <div class="container-fluid">
+    <div class="input-group has-validation mb-3" data-field="username">
+      <div class="form-floating">
+        <input
+          type="text"
+          name="username"
+          class="form-control"
+          placeholder=""
+          autofocus>
+        <label>Email address</label>
+      </div>
+      <div class="invalid-feedback" data-field-error></div>
+    </div>
+    <div class="input-group has-validation mb-1" data-field="password">
+      <div class="form-floating">
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          placeholder="">
+        <label>Password</label>
+      </div>
+      <div class="invalid-feedback" data-field-error></div>
+    </div>
+    <div class="mb-3">
+      <span class="text-secondary">Forgot password?</span>
+      <a href="/account/forgot-password" class="link-dark link-underline-opacity-0 link-underline-opacity-100-hover link-underline link-offset-2">Reset it</a>
+    </div>
+    <div class="">
+      <button
+        type="submit"
+        class="btn btn-primary text-uppercase btn-lg w-100 mb-3"
+        data-loading-label="Logging in...">
+        <span
+          class="spinner-border spinner-border-sm me-1"
+          style="display: none;"
+          data-loader></span>
+        <span data-text>Log In</span>
+      </button>
+    </div>
+    <div class="mb-3 text-center">
+      <span class="text-secondary">New Customer?</span>
+      <a href="/account/register" class="link-dark link-underline-opacity-0 link-underline-opacity-100-hover link-underline link-offset-2">Create an account</a>
+    </div>
+  </div>
+</form>

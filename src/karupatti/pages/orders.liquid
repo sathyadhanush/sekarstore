@@ -1,0 +1,63 @@
+{% layout "default.liquid" %}
+
+{% block content %}
+  {% render 'account-nav.liquid' location: location %}
+
+  <div class="container py-5">
+    {% if orders.size > 0 %}
+      <div>
+        {% for order in orders %}
+          <a class="text-decoration-none" href="/orders/{{order.id}}">
+            <div class="card rounded mb-4 border-light-subtle">
+              <div class="card-header text-uppercase py-3 border-light-subtle fw-semibold d-flex">
+                <div class="me-5">
+                  <small class="text-uppercase text-secondary">
+                    Order placed on
+                  </small>
+                  <div>{{ order.created_at }}</div>
+                </div>
+
+                <div>
+                  <small class="text-uppercase text-secondary">Order Total</small>
+                  <div>{{ order.presentation_amount }}</div>
+                </div>
+
+                <div class="ms-auto">
+                  <small class="text-uppercase text-secondary">Order # {{ order.name }}</small>
+                </div>
+              </div>
+              <div class="card-body">
+                {% for item in order.items %}
+                  <div class="d-flex py-3">
+                    <div class="border rounded-3 position-relative flex-shrink-0" style="width: 64px; height: 64px">
+                      <span class="badge bg-secondary fw-normal rounded-circle position-absolute" style="right: -6px; top: -6px">{{ item.quantity }}</span>
+                      {% if item.image %}
+                        <img
+                          class="h-100 w-100 rounded-3"
+                          src="{{item.image}}"
+                          alt="">
+                      {% else %}
+                        <div style="width: 92px" class="h-100 w-100 d-flex flex-column text-white align-items-center bg-secondary-subtle justify-content-center rounded">
+                          <ion-icon class="fs-2" name="image"></ion-icon>
+                        </div>
+                      {% endif %}
+                    </div>
+                    <div class="px-3">
+                      <div class="fw-semibold">{{ item.name }}</div>
+                      <div class="text-secondary small">{{ item.name }}</div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="text-center">
+        <div class="mt-4 mb-4 fs-6">You have not placed any orders yet.</div>
+        <a href="/" class="btn btn-primary btn-lg mt-2 text-uppercase">Start shoppping</a>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

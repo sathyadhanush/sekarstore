@@ -1,0 +1,57 @@
+<div
+  class="w-100 start-0 position-fixed bg-white animate__animated animate__faster d-none border-bottom"
+  style="top: 70px; max-height: 400px; overflow-y: auto;"
+  id="category-dropdown">
+  <div class="container py-5 text-start">
+    <div class="row">
+      {% assign categoriesSize = categories | size %}
+      {% assign chunkSize = categoriesSize | divided_by: 4 %}
+      {% assign chunks = categoriesSize | divided_by: chunkSize %}
+      {% assign range = (1..chunks) %}
+      {% for i in range %}
+        <div class="col-3 animate__animated animate__fadeInUp animate__faster">
+          <ul class="nav flex-column">
+            {% assign offset = i | minus: 1 | times: chunkSize %}
+            {% for category in categories limit: chunkSize offset: offset %}
+              <li class="nav-item mb-2">
+                <a href="/categories/{{ category.id }}" class="link-dark link-underline-opacity-0 link-underline-opacity-100-hover link-offset-2">
+                  {{ category.name | strip }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  const $categoryDropDown = document.getElementById('category-dropdown');
+  const $categoryDropDownTrigger = document.getElementById('category-dropdown-trigger');
+
+  let timeout = null;
+
+  function openCategoryDropDown() {
+    if (timeout !== null) {
+      clearTimeout(timeout);
+      timeout = null;
+      return;
+    }
+    $categoryDropDownTrigger.children[0].classList.add("text-decoration-underline");
+    $categoryDropDown.classList.remove('d-none', 'animate__fadeOutDown');
+    $categoryDropDown.classList.add('animate__fadeInUp');
+  }
+
+  function closeCategoryDropDown(event) {
+    timeout = setTimeout(() => {
+      $categoryDropDownTrigger.children[0].classList.remove("text-decoration-underline");
+      $categoryDropDown.classList.remove('animate__fadeInUp');
+      $categoryDropDown.classList.add('d-none', 'animate__fadeOutDown');
+      timeout = null;
+    }, 50);
+  }
+
+  $categoryDropDownTrigger.addEventListener('mouseenter', openCategoryDropDown);
+  $categoryDropDownTrigger.addEventListener('mouseleave', closeCategoryDropDown);
+</script>

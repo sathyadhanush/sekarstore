@@ -1,0 +1,74 @@
+
+$primary: #3452FE;
+
+$font-size-root: 15px;
+
+$btn-border-radius: 4px;
+$btn-border-radius-sm: 4px;
+$btn-border-radius-lg: 4px;
+$btn-font-weight: 500;
+$btn-height-lg: 52px;
+
+$input-btn-font-size-lg: 14px;
+$input-btn-font-size-sm: 14px;
+$input-btn-font-size: 14px;
+$input-btn-padding-y-lg: 14px;
+$input-btn-padding-x-lg: 18px;
+
+$input-btn-font-size-sm: 14px;
+$input-focus-box-shadow: 0 0 0 1px #000 inset;
+$input-height-lg: 52px;
+$input-border-width: 1px;
+$input-focus-border-color: #000;
+$input-border-radius-lg: 4px;
+
+$alert-bg-scale: 0;
+$alert-border-radius: 0;
+$alert-color-scale: 0;
+$alert-border-width: 0;
+
+$small-font-size: 12px;
+
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+.alert-primary {
+  color: $white !important;
+}
+
+ion-icon {
+  font-size: 24px;
+}
+
+.navbar {
+  height: 70px;
+  background-color: $black;
+}
+
+.product-list {
+  margin-bottom: 60px;
+}
+
+.product-list-item {
+  margin-bottom: 30px;
+}
+
+.address-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.address {
+  width: calc((100% / 3) - (3 * 20px));
+  flex-shrink: 0;
+  margin: 10px;
+}
+
+
+/*# sourceMappingURL=style.css.map */

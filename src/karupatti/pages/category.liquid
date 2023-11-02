@@ -1,0 +1,222 @@
+{% layout "default.liquid" %}
+
+{% block content %}
+
+  <div class="container py-5 px-5">
+    <div class="row">
+      <div class="col-12 col-md-4 col-lg-3 mt-1">
+        
+        <div class=" d-flex  justify-content-between">
+          <label class=" d-flex form-check-label h4  fw-bold">
+          Filters
+        </label>
+          <a class="btn btn-secondary bg-success mb-1  d-inline text-decoration-none" href="">Apply</a>
+          </div>
+        <div class="filter-sidebar">
+         
+          <div class="accordion mt-2" id="accordionPanelsStayOpenExample">
+            {% if storeBrands.size > 0 %}
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                <button class="accordion-button fw-bold h4" style="font-size: 20px;" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                  Brands
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-body" style="max-height: 150px; overflow-y: auto;">
+                  {% for Brand in storeBrands %}
+                  <div class="form-check">
+                    <input
+                        name="brand"
+                        class="form-check-input"
+                        type="checkbox"
+                        value="{{ Brand.name }}"
+                        id="{{ Brand.id }}"
+                        data-type="brand">
+                    <label class="form-check-label h6" for="{{ Brand.id }}">
+                      {{ Brand.name }}
+                    </label>
+                </div>
+              {% endfor %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+            <div class="accordion-item" >
+              <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                <button class="accordion-button collapsed fw-bold h4" style="font-size: 20px;" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                  Price
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                <div class="accordion-body">
+                  <div id="slider" class="mb-4 color bg-danger">
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <p>Min: <span id="minValue"></span></p>
+                    <p>Max: <span id="maxValue"></span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% if categories.size > 0 %}
+            <div class="accordion-item" >
+              <h2 class="accordion-header" id="panelsStayOpen-headingthree">
+                <button class="accordion-button fw-bold h4" style="font-size: 20px;" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsethree" aria-expanded="true" aria-controls="panelsStayOpen-collapsethree">
+                  Categories
+                </button>
+              </h2>
+              
+              <div id="panelsStayOpen-collapsethree" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingthree">
+                <div class="accordion-body" style="max-height: 100px; overflow-y: auto;">
+                  {% for category in categories %}
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="category"
+                      value="{{ category.id }}"
+                      id="{{ category.id }}"  
+                      data-type="category">
+                    <label class="form-check-label h6" for="{{ category.id }}">
+                      {{ category.name }}
+                    </label>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+          
+            </div>
+          {% endif %}
+        
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-8 col-lg-9">
+        <div class="category-content mt-2">
+          {% if  categories.name %}
+          <h2 class="h4 fw-bold mb-3">{{ categories.name }}</h2>
+          {% else %}
+          <h2 class="h4 fw-bold mb-3">{{ title }}</h2>
+          {% endif %}
+          <div class="product-grid">
+            {% for product in products %}
+              <a class="product-grid-item" href="/products/{{ product.id }}">
+              {% if product.media[0].url %}
+                <div>
+                  <img
+                    style="height: 330px"
+                    src="{{ product.media[0].url }}"
+                    class="img-fluid">
+                </div>
+              {% else %}
+                <div style="height: 330px" class="d-flex flex-column text-white align-items-center bg-secondary-subtle justify-content-center">
+                  <ion-icon class="fs-1" name="image"></ion-icon>
+                  <span>No Image</span>
+                </div>
+              {% endif %}
+              <div class="p-2">
+                <div class="h5 product-grid-item__title">{{ product.name }}</div>
+                <div>
+                <span class="product-grid-item__price fw-bold" >{{ product.variants[0].price | money_format }}</span>
+                <span class="text-decoration-line-through text-muted">
+                  {{ product.variants[0].comparePrice | money_format }}
+                </span>
+              </div>
+              </div>
+             
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block pagescripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const brandCheckboxes = document.querySelectorAll('[data-type="brand"]');
+  const categoryRadioButtons = document.querySelectorAll('[data-type="category"]');
+  const applyButton = document.querySelector('.btn-secondary');
+
+  applyButton.addEventListener('click', function(event) {
+    event.preventDefault();
+
+    const selectedBrands = Array.from(brandCheckboxes)
+      .filter(checkbox => checkbox.checked)
+      .map(checkbox => checkbox.value);
+
+    const selectedCategory = Array.from(categoryRadioButtons)
+      .find(radio => radio.checked);
+
+    const currentURL = new URL(window.location.href);
+    if (selectedBrands.length > 0) {
+      currentURL.searchParams.set('brands', selectedBrands.join(','));
+    } else {
+      currentURL.searchParams.delete('brands');
+    }
+    if (selectedCategory) {
+      currentURL.searchParams.set('category_id', selectedCategory.getAttribute('value'));
+    } else {
+      currentURL.searchParams.delete('category_id');
+    }
+
+    window.location.href = currentURL.toString();
+  });
+
+  function restoreSelectedBrands() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedBrands = urlParams.get('brands');
+
+    if (selectedBrands) {
+      const selectedBrandArray = selectedBrands.split(',');
+      brandCheckboxes.forEach(checkbox => {
+        if (selectedBrandArray.includes(checkbox.value)) {
+          checkbox.checked = true;
+        }
+      });
+    }
+  }
+  restoreSelectedBrands();
+
+  function restoreSelectedCategory() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedCategoryID = urlParams.get('category_id');
+    categoryRadioButtons.forEach(radio => {
+      if (radio.getAttribute('value') === selectedCategoryID) {
+        radio.checked = true;
+      }
+    });
+  }
+  restoreSelectedCategory();
+});
+
+  const minValue = 0;
+const maxValue = 10000;
+const slider = document.getElementById('slider');
+
+noUiSlider.create(slider, {
+    start: [minValue, maxValue],
+    connect: true,
+    step: 1,
+    range: {
+        'min': minValue,
+        'max': maxValue
+    }
+});
+slider.noUiSlider.on('update', function (values) {
+    const min = parseInt(values[0]);
+    const max = parseInt(values[1]);
+    document.getElementById('minValue').innerText = min;
+    document.getElementById('maxValue').innerText = max;
+});
+
+
+
+
+
+</script>
+
+{% endblock %}

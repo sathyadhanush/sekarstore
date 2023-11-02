@@ -1,0 +1,336 @@
+{% layout "default.liquid" %}
+
+{% block content %}
+  <section class="breadcrumb">
+    <ul class="breadcrumb__list flex container">
+      <li>
+        <a href="/" class="breadcrumb__link">Home</a>
+      </li>
+      <li>
+        <span class="breadcrumb__link">></span>
+      </li>
+      <li>
+        <span class="breadcrumb__link">Categories</span>
+      </li>
+      <li>
+        <span class="breadcrumb__link">></span>
+      </li>
+      <li>
+        <span class="breadcrumb__link">{{ category.name }}</span>
+      </li>
+    </ul>
+  </section>
+  <div class="container category-products">
+    <div class="content">
+      <div class="single-category py-4 ">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="filter">
+                <div class="sorter d-flex align-items-baseline justify-content-between">
+                  <h4 class="d-inline">Brands</h4>
+                  <div class="form-check">
+                    <a class="btn btn-primary d-inline text-decoration-none" href="">Apply</a>
+                  </div>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="defaultCheck1">
+                  <label class="form-check-label" for="defaultCheck1">
+                    Read
+                  </label>
+                  <span>(15)</span>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="defaultCheck2">
+                  <label class="form-check-label" for="defaultCheck2">
+                    Write
+                  </label>
+                  <span>(15)</span>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="defaultCheck3">
+                  <label class="form-check-label" for="defaultCheck3">
+                    Adidas
+                  </label>
+                  <span>(15)</span>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="defaultCheck4">
+                  <label class="form-check-label" for="defaultCheck4">
+                    MRF
+                  </label>
+                  <span>(15)</span>
+
+                </div>
+                <div></div>
+                <h4 class=" mt-3">Price</h4>
+                <input
+                  type="range"
+                  class="form-range"
+                  id="customRange1">
+                <div class="price-range">
+                  <span class="price-form">₹50</span>
+                  <span class="price-form">₹500</span>
+                </div>
+
+              </div>
+
+              <div
+                class="offcanvas offcanvas-start"
+                tabindex="-1"
+                id="offcanvasExample"
+                aria-labelledby="offcanvasExampleLabel">
+                <div class="offcanvas-header">
+                  <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filters</h5>
+                  <button
+                    type="button"
+                    class="btn-close text-reset"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+
+                  <div class="sorter d-flex align-items-center justify-content-between">
+                    <h4 class="d-inline mt-2">Brands</h4>
+                    <div class="form-check">
+                      <a class="btn btn-primary d-inline text-decoration-none" href="">Apply</a>
+                    </div>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                      Read
+                    </label>
+                    <span>(15)</span>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="defaultCheck2">
+                    <label class="form-check-label" for="defaultCheck2">
+                      Write
+                    </label>
+                    <span>(15)</span>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="defaultCheck3">
+                    <label class="form-check-label" for="defaultCheck3">
+                      Adidas
+                    </label>
+                    <span>(15)</span>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="defaultCheck4">
+                    <label class="form-check-label" for="defaultCheck4">
+                      MRF
+                    </label>
+                    <span>(15)</span>
+
+                  </div>
+
+                  <h4 class=" mt-3">Price</h4>
+                  <input
+                    type="range"
+                    class="form-range"
+                    id="customRange1">
+                  <div class="price-range">
+                    <span id="minPrice">₹50</span>
+                    <span id="maxPrice">₹500</span>
+                  </div>
+                  <h4 class="mt-3">Category</h4>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="Pant">
+                    <label class="form-check-label" for="Pant">
+                      Pant
+                    </label>
+                    <span>(15)</span>
+
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="T-shirt">
+                    <label class="form-check-label" for="T-shirt">
+                      T-shirt
+                    </label>
+                    <span>(15)</span>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="Shirt">
+                    <label class="form-check-label" for="Shirt">
+                      Shirt
+                    </label>
+                    <span>(15)</span>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="Dress">
+                    <label class="form-check-label" for="Dress">
+                      Dress
+                    </label>
+                    <span>(15)</span>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section class="products section container">
+        <div class="sorter">
+          <h2 class="fw-bold my-1 pt-3">{{ category.name }}</h2>
+          <div class="btn-group">
+
+            <button
+              id="filter"
+              class="btn btn-primary d-inline filter-trigger"
+              data-bs-toggle="offcanvas"
+              href="#offcanvasExample"
+              role="button"
+              aria-controls="offcanvasExample">
+              Filter
+            </button>
+            <button
+              class="btn btn-outline-dark dropdown-toggle"
+              type="button"
+              id="sortDropdown"
+              data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Sort by: Featured
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+              <li>
+                <a class="dropdown-item" href="#">Default</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Name</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Price</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Brand</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="tab__items">
+          <div class="tab__item active-tab">
+            <div class="products__containers grid">
+              {% for product in products %}
+                <div class="product__item">
+                  <div class="product__banner">
+                    <a href="/products/{{ product.id }}" class="product__images">
+                      <img
+                        src="{{ product.media[0].url }}"
+                        alt=""
+                        class="product__img"
+                        default>
+
+                    </a>
+
+                  </div>
+                  <div class="product__content">
+                    <a href="/products/{{ product.id }}">
+                      <h3 class="product__title">{{ product.name }}</h3>
+                    </a>
+
+                    <div class="product__price flex">
+                      <span class="new__price">₹{{ product.variants[0].price }}</span>
+                      <span class="old__price">₹{{ product.variants[0].comparePrice }}</span>
+                    </div>
+
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+  </div>
+{% endblock %}
+
+{% block pagescripts %}
+  <script>
+
+    const FtoShow = '.filter';
+    const Fpopup = document.querySelector(FtoShow);
+    const Ftrigger = document.querySelector('.filter-trigger');
+    Ftrigger.addEventListener('click', () => {
+      setTimeout(() => {
+        if (! Fpopup.classList.contains('show')) {
+          Fpopup.classList.add('show')
+        }
+      }, 250)
+    })
+    document.addEventListener('click', (e) => {
+      const isClosest = e.target.closest(FtoShow);
+      if (! isClosest && Fpopup.classList.contains('show')) {
+        Fpopup.classList.remove('show')
+      }
+    })
+
+    function updateURL() {
+      const checkedCheckboxes = document.querySelectorAll('.form-check-input:checked');
+      const checkedValues = Array.from(checkedCheckboxes).map(checkbox => checkbox.nextElementSibling.textContent.trim());
+      const categoryID = '{{category.id}}';
+
+      const filterString = checkedValues.map(value => `Brand:${value}`).join('|');
+      const newURL = `/categories/${categoryID}/?filter=${filterString}`;
+
+      const applyButton = document.querySelector('.btn-primary');
+      applyButton.href = newURL;
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const applyButton = document.querySelector('.btn-primary');
+      applyButton.addEventListener('click', updateURL);
+    });
+  </script>
+{% endblock %}

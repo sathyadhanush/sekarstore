@@ -1,0 +1,96 @@
+{% layout "default.liquid" %}
+
+{% block content %}
+  {% if cart.items.length == 0 %}
+    <div class="container py-5" id="cart-empty">
+      <div class="d-flex flex-column align-items-center">
+        <div class="fs-3 mt-5">Your cart is empty!</div>
+        <a href="/" class="btn btn-primary btn-lg  mt-4 text-uppercase">Continue shoppping</a>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if cart.items.size > 0 %}
+    <div class="container py-5" id="cart-items">
+      <h2 class="text-center mb-2">Bag</h2>
+      <div class="text-center">
+        <span class="text-secondary">{{ cart.items.length }} Item</span>
+        <span class="text-secondary mx-2">|</span>
+        <span>{{ cart.total_amount | money_format }}</span>
+      </div>
+      <div class="px-3">
+        <div class="mt-5 border-top pt-3">
+          <div class="row">
+            <div class="col-12 col-lg-7 col-xl-8 pe-4">
+              {% for item in cart.items %}
+                <div data-id="{{item.id}}" class="border-bottom">
+                  <div class="ps-0 py-4">
+                    <div class="d-flex">
+                      {% if item.image %}
+                        <img
+                          class="image-fluid"
+                          src="{{item.image}}"
+                          style="width: 92px" />
+                      {% else %}
+                        <div style="width: 92px" class="d-flex flex-column text-white align-items-center bg-secondary-subtle justify-content-center rounded">
+                          <ion-icon class="fs-2" name="image"></ion-icon>
+                        </div>
+                      {% endif %}
+
+                      <div class="ms-4">
+                        <div>
+                          <a href="/products/{{item.product_id}}" class="link-underline link-underline-opacity-0 link-underline-opacity-100-hover link-offset-2">{{ item.name }}</a>
+                        </div>
+                        {% if item.variant %}
+                          <div class="text-secondary mt-4">{{ item.variant }}</div>
+                        {% endif %}
+                        <div class="fw-semibold mt-1">{{ item.price | money_format }}</div>
+                        <div class="border border rounded d-inline-flex mt-2">
+                          <button class="border-0 bg-transparent bg-hover d-flex align-items-center">
+                            <ion-icon
+                              class="fs-5 text-secondary"
+                              name="remove-outline"
+                              data-action="decrement"></ion-icon>
+                          </button>
+                          <span class="px-2 text-secondary">{{ item.quantity }}</span>
+                          <button class="border-0 bg-transparent d-flex align-items-center">
+                            <ion-icon
+                              data-action="increment"
+                              name="add-outline"
+                              class="fs-5 text-secondary"></ion-icon>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+            <div class="col-12 col-lg-5 col-xl-4 mt-4 mt-lg-0">
+              <h4>Summary</h4>
+              <div class="mt-3">
+                <div class="row mb-2">
+                  <div class="col">Subtotal</div>
+                  <div class="col text-end">{{ cart.total_amount | money_format }}</div>
+                </div>
+                <div class="row mb-2">
+                  <div class="col">Total</div>
+                  <div class="col text-end">{{ cart.total_amount | money_format }}</div>
+                </div>
+                <button class="btn btn-lg text-center text-uppercase btn-primary w-100 mt-4" data-action="checkout">
+                  Checkout
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block pagescripts %}
+  <script>
+    window.__appState.cart = {{cart|json}};
+  </script>
+{% endblock %}

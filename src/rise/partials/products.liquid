@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="product-list">
+    <h2 class="h1 fw-bold text-uppercase text-center mb-5 product-list-title">{{ title }}</h2>
+    <div class="d-flex flex-wrap product-list-items justify-content-center">
+      {% for product in products %}
+        <a class="d-block text-decoration-none text-black text-center flex-grow-1 product-list-item mb-5 px-2" href="/products/{{ product.id }}" style="border-radius: 4px; max-width: calc(100% / 5)">
+          <div class="mx-auto" style="width: 214px; height: 214px;">
+            <img src="{{ product.media[0].url }}" class="img-fluid" />
+          </div>
+          <div class="mt-3 fw-semibold">{{ product.name }}</div>
+          <div class="fw-semibold mt-2">{{ product.presentation_price }}</div>
+        </a>
+      {% endfor %}
+    </div>
+    {% if product_count > 10 %}
+      <div class="text-center">
+        <a href="/categories/{{category.id}}" class="btn btn-primary text-uppercase btn-lg mx">View More</a>
+      </div>
+    {% endif %}
+  </div>
+</div>

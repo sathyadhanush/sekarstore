@@ -1,0 +1,116 @@
+<form class="address-form">
+  {% if address.id %}
+    <input
+      hidden
+      name="id"
+      value="{{address.id}}">
+  {% endif %}
+
+  <div class="input-group has-validation mb-3" data-field="first_name">
+    <div class="form-floating">
+      <input
+        type="text"
+        name="first_name"
+        class="form-control"
+        value="{{address.first_name}}"
+        placeholder="">
+      <label>Name</label>
+    </div>
+    <div class="invalid-feedback" data-field-error></div>
+  </div>
+
+  <div class="input-group has-validation mb-3" data-field="mobile">
+    <div class="form-floating">
+      <input
+        type="text"
+        class="form-control"
+        name="mobile"
+        value="{{address.mobile}}"
+        placeholder="">
+      <label>Mobile number</label>
+    </div>
+    <div class="invalid-feedback" data-field-error></div>
+  </div>
+
+  <div class="input-group has-validation mb-3" data-field="address1">
+    <div class="form-floating">
+      <input
+        type="text"
+        class="form-control"
+        name="address1"
+        value="{{address.address1}}"
+        placeholder="">
+      <label for="lastName">Address</label>
+    </div>
+    <div class="invalid-feedback" data-field-error></div>
+  </div>
+
+  <div class="input-group has-validation mb-3" data-field="city">
+    <div class="form-floating">
+      <input
+        type="text"
+        class="form-control"
+        name="city"
+        value="{{address.city}}"
+        placeholder="">
+      <label>City</label>
+    </div>
+    <div class="invalid-feedback" data-field-error></div>
+  </div>
+
+  <div class="input-group has-validation mb-3" data-field="state">
+    <div class="form-floating">
+      <input
+        type="text"
+        class="form-control"
+        name="state"
+        value="{{address.state}}"
+        placeholder="">
+      <label>State</label>
+    </div>
+    <div class="invalid-feedback" data-field-error></div>
+  </div>
+
+  <div class="input-group has-validation mb-3" data-field="country">
+    <div class="form-floating">
+      <select class="form-select" name="country">
+        <option value="" selected>Choose a country</option>
+        {% for country in countries %}
+          {% if address.country == country.code %}
+            <option value="{{country.code}}" selected>{{ country.name }}</option>
+          {% else %}
+            <option value="{{country.code}}">{{ country.name }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+      <label>Country</label>
+    </div>
+    <div class="invalid-feedback" data-field-error></div>
+  </div>
+
+  <div class="input-group has-validation mb-3" data-field="zip">
+    <div class="form-floating">
+      <input
+        type="text"
+        class="form-control"
+        name="zip"
+        value="{{address.zip}}"
+        placeholder="">
+      <label>Postal code</label>
+    </div>
+    <div class="invalid-feedback" data-field-error></div>
+  </div>
+
+  <div class="mb-3">
+    <button
+      type="submit"
+      class="btn btn-primary text-uppercase btn-lg w-100"
+      data-loading-label="Saving...">
+      <span
+        class="spinner-border spinner-border-sm me-1"
+        style="display: none;"
+        data-loader></span>
+      <span data-text>Save</span>
+    </button>
+  </div>
+</form>

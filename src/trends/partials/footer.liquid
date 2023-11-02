@@ -1,0 +1,61 @@
+<footer class="footer bg-black text-white">
+  <div class="container py-5 px-4">
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-8 col-xl-9">
+        <div>
+          <ul class="nav flex-column">
+            {% if footer.hasRefundPolicy %}
+              <li class="nav-item mb-2">
+                <a class="link-light text-white-50 small link-underline-opacity-0 link-offset-2 link-underline link-underline-opacity-100-hover text-white px-0" href="/refund-policy">Returns & Refunds</a>
+              </li>
+            {% endif %}
+            {% if footer.hasPrivacyPolicy %}
+              <li class="nav-item mb-2">
+                <a class="link-light text-white-50 small link-underline-opacity-0 link-offset-2 link-underline link-underline-opacity-100-hover text-white px-0" href="/privacy-policy">Privacy Notice</a>
+              </li>
+            {% endif %}
+            {% if footer.hasTermsAndConditions %}
+              <li class="nav-item mb-2">
+                <a class="link-light text-white-50 small link-underline-opacity-0 link-offset-2 link-underline link-underline-opacity-100-hover text-white px-0" href="/terms">Terms of Service</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4 col-xl-3 mt-4 mt-md-0">
+        <ul class="nav list-unstyled d-flex">
+          <li>
+            <a class="text-white" href="#">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+          <li class="ms-4">
+            <a class="text-white" href="#">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+          </li>
+          <li class="ms-4">
+            <a class="text-white" href="#">
+              <ion-icon name="logo-youtube"></ion-icon>
+            </a>
+          </li>
+          <li class="ms-4">
+            <a class="text-white" href="#">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+          </li>
+          <li class="ms-4">
+            <a class="text-white" href="#">
+              <ion-icon name="logo-tiktok"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="pt-4">
+      <div class="d-flex text-secondary">
+        <small>© 2023 {{ storeName }} All Rights Reserved</small>
+      </div>
+    </div>
+  </div>
+</div>

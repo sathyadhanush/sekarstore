@@ -1,0 +1,13 @@
+{% layout "default.liquid" %}
+
+{% block content %}
+  <section class="py-5 m-0 w-100 text-center mb-5" style="background-color: #121112; color: #FFF;">
+    <h1 class="display-5 fw-semibold py-5">
+      <span class="">Welcome to the</span><br>
+      <span class="text-primary">{{ storeName }}</span>
+    </h1>
+  </section>
+  {% for category in products %}
+    {% render 'products.liquid', products: category.products, title: category.name, product_count: category.product_count category: category %}
+  {% endfor %}
+{% endblock %}

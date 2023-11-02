@@ -1,0 +1,76 @@
+<form id="register-form" class="container-fluid">
+  <div class="input-group has-validation mb-3" data-field="first_name">
+    <div class="form-floating">
+      <input
+        type="text"
+        name="first_name"
+        class="form-control"
+        placeholder=""
+        autofocus>
+      <label>First name
+        <span class="text-danger">*</span>
+      </label>
+    </div>
+    <div class="invalid-feedback" data-field-error></div>
+  </div>
+
+  <div class="input-group has-validation mb-3" data-field="last_name">
+    <div class="form-floating">
+      <input
+        type="text"
+        name="last_name"
+        class="form-control"
+        placeholder="">
+      <label>Last name</label>
+    </div>
+    <div class="invalid-feedback" data-field-error></div>
+  </div>
+
+  <div class="input-group has-validation mb-3" data-field="email">
+    <div class="form-floating">
+      <input
+        type="text"
+        name="email"
+        class="form-control"
+        placeholder="">
+      <label>
+        Email address
+        <span class="text-danger">*</span>
+      </label>
+    </div>
+    <div class="invalid-feedback" data-field-error></div>
+  </div>
+
+  <div class="input-group has-validation mb-3" data-field="password">
+    <div class="form-floating">
+      <input
+        type="password"
+        name="password"
+        class="form-control"
+        placeholder="">
+      <label>
+        Password
+        <span class="text-danger">*</span>
+      </label>
+    </div>
+    <div class="invalid-feedback" data-field-error></div>
+  </div>
+
+  <div class="mb-3">
+    <button
+      type="submit"
+      class="btn btn-primary text-uppercase btn-lg w-100"
+      data-loading-label="Creating...">
+      <span
+        class="spinner-border spinner-border-sm me-1"
+        style="display: none;"
+        data-loader></span>
+      <span data-text>Create account</span>
+    </button>
+  </div>
+
+  <div class="mb-3">
+    <span class="text-secondary">Already have an account?</span>
+    <a href="/account/login" class="link-primary link-underline-opacity-0 link-underline-opacity-100-hover link-underline link-offset-2">Log In</a>
+  </div>
+</form>

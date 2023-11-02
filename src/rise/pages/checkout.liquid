@@ -1,0 +1,89 @@
+{% layout "base.liquid" %}
+
+{% block body %}
+  <div class="row h-100" id="root">
+    <div class="col-7">
+      <div class="p-4 py-5 me-4 ms-auto" style="width: 650px">
+        <h4 class="text-uppercase fw-bold d-flex align-items-center">Checkout</h4>
+
+        <form class="mt-5">
+          <h6 class="fw-semibold mb-3">Delivery address</h6>
+          {% for address in addresses %}
+            <div class="mb-3 border rounded d-flex py-3">
+              <div class="px-3">
+                {% if forloop.index0 == 0 %}
+                  <input class="form-check-input" type="radio" name="address" id="{{address.id}}" value="{{address.id}}" checked>
+                {% else %}
+                  <input class="form-check-input" type="radio" name="address" id="{{address.id}}" value="{{address.id}}">
+                {% endif %}
+              </div>
+              <label class="form-check-label" for="{{address.id}}">
+                <div>
+                  <span class="fw-semibold">{{ address.first_name }}</span>
+                  <span class="fw-semibold ms-3">{{ address.mobile }}</span>
+                </div>
+                <div class="mt-2">{{ address.address1 }} {{ address.city }} {{ address.state }} {{ address.country }} -
+                  <span class="fw-semibold">{{ address.zip }}</span>
+                </div>
+              </label>
+            </div>
+          {% endfor %}
+
+          <button type="button" class="mb-3 w-100 lh-lg border rounded p-5 bg-light d-flex align-items-center justify-content-center" data-bs-toggle="offcanvas" data-bs-target="#add-address-offcanvas">
+            <div class="d-flex flex-column align-items-center">
+              <div>
+                <ion-icon name="location-outline"></ion-icon>
+              </div>
+              <a class="link-dark link-underline link-underline-opacity-0 link-underline-opacity-100-hover link-offset-2">Add a new address</a>
+            </div>
+          </button>
+
+          <div class="mt-4 text-end">
+            <button type="submit" class="btn btn-primary btn-lg text-uppercase">Confirm order</button>
+          </div>
+
+          <div class="offcanvas offcanvas-end" style="width: 500px" tabindex="-1" id="add-address-offcanvas">
+            <div class="offcanvas-header border-bottom p-4">
+              <h5 class="offcanvas-title text-uppercase fw-bold">Add a new address</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-4">
+              {% render 'address-form.liquid' %}
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-5 bg-light">
+      <div class="p-4 py-5 me-4 me-auto" style="width: 420px">
+        {% for item in cart.items %}
+          <div class="d-flex align-items-center py-2">
+            <div class="border rounded-3 position-relative flex-shrink-0" style="width: 64px; height: 64px">
+              <span class="badge bg-secondary fw-normal rounded-circle position-absolute" style="right: -6px; top: -6px">{{ item.quantity }}</span>
+              <img class="h-100 w-100 rounded-3" src="{{item.image}}" alt="">
+            </div>
+            <div class="px-3">
+              <div class="fw-semibold small">{{ item.name }}</div>
+            </div>
+            <div class="ms-auto fw-semibold">{{ item.total }}</div>
+          </div>
+        {% endfor %}
+        <div class="d-flex py-2 align-items-center">
+          <div>
+            <div class="fs-6 fw-semibold">Total</div>
+          </div>
+          <div class="ms-auto d-flex align-items-center">
+            <span class="text-black-50 small me-1">INR</span>
+            <span class="fs-6 fw-semibold">{{ cart.total_amount }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block pagescripts %}
+  <script>
+    window.__appState.cart = {{cart|json}};
+  </script>
+{% endblock %}

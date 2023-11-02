@@ -1,0 +1,67 @@
+<header class="position-fixed top-0 w-100" style="z-index: 1030;">
+  <nav class="navbar">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="{{ store.logo }}" />
+      </a>
+
+      <nav class="nav text-white">
+        <a href="/" class="btn btn-link link-light link-underline link-underline-opacity-0 link-underline-opacity-100-hover link-offset-2">Browse
+          All</a>
+
+        <div id="category-dropdown-trigger">
+          <button class="btn btn-link link-light link-underline link-underline-opacity-0 link-underline-opacity-100-hover link-offset-2">
+            <span>Shop by Category</span>
+            <div
+              class="w-100 start-0 position-absolute bg-white animate__animated animate__faster d-none"
+              style="top: 70px; box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; max-height: 400px; overflow-y: auto;"
+              id="category-dropdown">
+              <div class="container py-5 text-start">
+                <div class="row">
+                  {% assign categoriesSize = categories | size %}
+                  {% assign chunkSize = categoriesSize | divided_by: 4 %}
+                  {% assign chunks = categoriesSize | divided_by: chunkSize %}
+                  {% assign range = (1..chunks) %}
+                  {% for i in range %}
+                    <div class="col-3 animate__animated animate__fadeInUp animate__faster">
+                      <ul class="nav flex-column">
+                        {% assign offset = i | minus: 1 | times: chunkSize %}
+                        {% for category in categories limit: chunkSize offset: offset %}
+                          <li class="nav-item mb-2">
+                            <a href="/categories/{{ category.id }}" class="link-dark link-underline-opacity-0 link-underline-opacity-100-hover link-offset-2">{{
+   category.name }}</a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </button>
+        </div>
+      </nav>
+
+      <div class="d-flex align-items-center">
+        <a href="/account" class="link-light link-underline link-underline-opacity-0 link-underline-opacity-100-hover link-offset-2">
+          {% if account %}
+            <span class="text-white">{{ account.first_name }}</span>
+          {% else %}
+            <ion-icon class="ms-4" name="person-circle-outline"></ion-icon>
+          {% endif %}
+        </a>
+        <a href="/cart" class="link-light position-relative">
+          <ion-icon
+            class="ms-4"
+            style="font-size: 22px;"
+            name="bag-outline"></ion-icon>
+          {% if cart.item_count > 0 %}
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-white text-dark">
+              {{ cart.item_count }}
+            </span>
+          {% endif %}
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>

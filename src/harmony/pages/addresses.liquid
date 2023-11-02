@@ -1,0 +1,98 @@
+{% layout "default.liquid" %}
+
+{% block content %}
+  {% render 'account-nav.liquid' location: location %}
+
+  <div
+    class="offcanvas offcanvas-end"
+    style="width: 500px"
+    tabindex="-1"
+    id="add-address-offcanvas">
+    <div class="offcanvas-header border-bottom p-4">
+      <h5 class="offcanvas-title text-uppercase fw-bold">Add a new address</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body p-4">
+      {% render 'address-form.liquid' countries: countries %}
+    </div>
+  </div>
+
+  <div class="container py-5">
+    <div class="row px-2 px-md-0">
+      {% for address in addresses %}
+        <div class="col-12 col-md-3 me-2 mb-3 lh-lg border rounded p-4" data-id="{{address.id}}">
+          <div class="d-flex fw-bold">
+            <span>{{ address.first_name }}</span>
+            <span class="ms-3">{{ address.mobile }}</span>
+          </div>
+          <div>{{ address.address1 }}</div>
+          <div>{{ address.city }}</div>
+          <div>{{ address.state }}</div>
+          <div>{{ address.country_name }}</div>
+
+          <div
+            class="offcanvas offcanvas-end"
+            style="width: 500px"
+            tabindex="-1"
+            id="edit-address-{{address.id}}">
+            <div class="offcanvas-header border-bottom p-4">
+              <h5 class="offcanvas-title text-uppercase fw-bold">Edit address</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-4">
+              {% render 'address-form.liquid' address: address, countries: countries %}
+            </div>
+          </div>
+
+          <div class="modal fade" id="delete-address-{{address.id}}">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  Are you sure you wish to delete this address?
+                </div>
+                <div class="modal-footer border-0">
+                  <button
+                    data-bs-dismiss="modal"
+                    type="button"
+                    class="btn btn-light btn-sm">Cancel</button>
+                  <button
+                    type="button"
+                    data-action="delete"
+                    class="btn btn-primary btn-sm">Remove</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="address__actions mt-3">
+            <button
+              data-bs-toggle="offcanvas"
+              data-bs-target="#edit-address-{{address.id}}"
+              class="btn btn-link p-0 link-secondary link-offset-2">Edit</button>
+            <button
+              class="btn btn-link link-secondary link-offset-2"
+              data-bs-toggle="modal"
+              data-bs-target="#delete-address-{{address.id}}">Delete</button>
+          </div>
+        </div>
+      {% endfor %}
+      <div
+        class="col-12 col-md-3 mb-3 border rounded py-5 bg-light d-flex flex-column align-items-center justify-content-center cursor-pointer"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#add-address-offcanvas">
+        <div>
+          <ion-icon name="location-outline"></ion-icon>
+        </div>
+        <button class="btn btn-link link-dark link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Add a new address</button>
+      </div>
+    </div>
+  </div>
+{% endblock %}

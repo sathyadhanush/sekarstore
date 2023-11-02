@@ -1,0 +1,151 @@
+{% layout "default.liquid" %}
+
+{% block content %}
+  <section class="breadcrumb">
+    <ul class="breadcrumb__list flex container">
+      <li>
+        <a href="/" class="breadcrumb__link">Home</a>
+      </li>
+      <li>
+        <span class="breadcrumb__link">></span>
+      </li>
+      <li>
+        <span class="breadcrumb__link">Products</span>
+      </li>
+      <li>
+        <span class="breadcrumb__link">></span>
+      </li>
+      <li>
+        <span class="breadcrumb__link">{{ product.name }}</span>
+      </li>
+    </ul>
+  </section>
+  <section class="details container  section--lg" id="product-item">
+    <div class="details__container container grid">
+      <div class="details__group">
+        <img
+          src="{{ product.media[0].url }}"
+          alt=""
+          class="details__img" />
+        <div class="details__small-images grid">
+          <img
+            src="{{ product.media[0].url }}"
+            alt=""
+            class="details__small-img " />
+          <img
+            src="{{ product.media[0].url }}"
+            alt=""
+            class="details__small-img " />
+          <img
+            src="{{ product.media[0].url }}"
+            alt=""
+            class="details__small-img " />
+        </div>
+      </div>
+
+
+      <div class="details__group">
+        <h3 class="details__title">{{ product.name }}</h3>
+
+        <div class="details__price flex">
+          <span class="new__price">₹{{ product.variants[0].price | money_format }}</span>
+          <span class="old__price">₹{{ product.variants[0].comparePrice | money_format }}</span>
+          <span class="save__price">$25% off</span>
+        </div>
+        <p class="short__description">
+          {{ product.description }}
+        </p>
+        <p class="short__description">
+          Cash on Delivery available
+        </p>
+
+
+        <div class="details__size flex">
+          <span class="details__size-title">Size</span>
+
+          <ul class="size__list">
+            <li>
+              <a href="#" class="size__link size-active">M</a>
+            </li>
+            <li>
+              <a href="#" class="size__link">L</a>
+            </li>
+            <li>
+              <a href="#" class="size__link ">XL</a>
+            </li>
+            <li>
+              <a href="#" class="size__link">XXL</a>
+            </li>
+          </ul>
+        </div>
+        <div class="details__action">
+
+          <button data-action="add-to-cart" class="btn btn-lg text-uppercase btn-primary d-flex w-30">Add to Cart</button>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
+
+{% block pagescripts %}
+  <script>
+    window.__appState.product = {{ product | json }};
+    const $productPrice = document.getElementById('product-price');
+    const $variants = document.querySelectorAll('.variant button');
+
+    function getVariant() {
+      const attributes = [];
+      $variants.forEach(($variant) => {
+        if ($variant.classList.contains('border-dark')) {
+          attributes.push($variant.id);
+        }
+      });
+      return product.variants.find((variant) => variant.attributes.toString() === attributes.toString());
+    }
+
+    $variants.forEach(($variant) => {
+      $variant.addEventListener('click', (event) => {
+        event
+          .target
+          .parentElement
+          .children
+          .forEach((children) => {
+            children.classList.remove('border-dark', 'bg-light');
+          });
+        event.target.classList.add('border-dark', 'bg-light');
+
+        const variant = getVariant();
+        $productPrice.innerText = `₹${
+          variant.price
+        }`;
+      });
+    });
+
+    function handleThumbnailClick(event) {
+      const target = event.target.closest('button');
+      const {index} = target.dataset;
+      document.querySelector('.product-image').src = product.media[index].url;
+
+      document
+        .querySelectorAll('.thumnail-list button')
+        .forEach((element) => {
+          element.classList.remove('border-dark');
+        })
+        target
+        .classList
+        .add('border-dark');
+    }
+
+    const mainImg = document.querySelector('.details__img'),
+      smallImg = document.querySelectorAll('.details__small-img');
+
+    smallImg.forEach((img) => {
+      img.addEventListener('click', function() {
+        mainImg.src = this.src;
+      })
+    })
+  </script>
+{% endblock %}

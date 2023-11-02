@@ -1,0 +1,78 @@
+{% layout "default.liquid" %}
+
+{% block content %}
+  {% render 'account-nav.liquid' location: location %}
+
+  <div
+    class="offcanvas offcanvas-end"
+    style="width: 500px"
+    tabindex="-1"
+    id="add-address-offcanvas">
+    <div class="offcanvas-header border-bottom p-4">
+      <h5 class="offcanvas-title text-uppercase fw-bold">Add a new address</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body p-4">
+      {% render 'address-form.liquid' %}
+    </div>
+  </div>
+
+  <div class="container py-5">
+    <h2 class="text-center mb-4 text-uppercase fw-bold">Addresses</h2>
+    <div class="address-list d-flex justify-content-center">
+
+      {% for address in addresses %}
+        <div class="address mb-3 mx-3 lh-lg border rounded p-4" data-id="{{address.id}}">
+          <div class="d-flex fw-bold">
+            <span>{{ address.first_name }}</span>
+            <span class="ms-3">{{ address.mobile }}</span>
+          </div>
+          <div>{{ address.address1 }}</div>
+          <div>{{ address.city }}</div>
+          <div>{{ address.state }}</div>
+          <div>{{ address.country }}</div>
+
+          <div
+            class="offcanvas offcanvas-end"
+            style="width: 500px"
+            tabindex="-1"
+            id="edit-address-{{address.id}}">
+            <div class="offcanvas-header border-bottom p-4">
+              <h5 class="offcanvas-title text-uppercase fw-bold">Edit address</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-4">
+              {% render 'address-form.liquid' address: address %}
+            </div>
+          </div>
+
+          <div class="address__actions mt-3">
+            <button
+              data-bs-toggle="offcanvas"
+              data-bs-target="#edit-address-{{address.id}}"
+              class="btn btn-link  text-uppercase btn-primary  link-offset-2">Edit</button>
+            <button class="btn btn-link  text-uppercase btn-primary link-offset-2" data-action="delete">Delete</button>
+          </div>
+        </div>
+      {% endfor %}
+      <div
+        class="address mb-3 border rounded py-5 bg-light d-flex flex-column align-items-center justify-content-center cursor-pointer"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#add-address-offcanvas"
+        style="width: 250px">
+        <div>
+          <ion-icon name="location-outline"></ion-icon>
+        </div>
+        <button class="btn btn-lg text-uppercase btn-primary d-flex w-30">Add a new address</button>
+      </div>
+    </div>
+  </div>
+{% endblock %}

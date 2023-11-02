@@ -1,0 +1,89 @@
+<main class="main">
+
+
+  <section class="products section container grid">
+    <h3 class="section__title">{{ category.name }}
+      <span class="view">
+        <a href="/categories/{{category.id}}" class="view__order">View</a>
+      </span>
+    </h3>
+    <div class="tab__items">
+      <div class="tab__item active-tab">
+        <div class="products__containers grid">
+          {% for product in products %}
+            <div class="product__item">
+              <div class="product__banner">
+                <a href="/products/{{ product.id }}" class="product__images">
+                  <img
+                    src="{{ product.media[0].url }}"
+                    alt=""
+                    class="product__img"
+                    default>
+
+                </a>
+
+              </div>
+              <div class="product__content">
+                <a href="/products/{{ product.id }}">
+                  <h3 class="product__title">{{ product.name }}</h3>
+                </a>
+
+                <div class="product__price flex">
+                  <span class="new__price">₹{{ product.variants[0].price | money_format }}</span>
+                  <span class="old__price">₹{{ product.variants[0].comparePrice | money_format }}</span>
+                </div>
+
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  {% if product_count > 10 %}
+    <div class="text-center">
+      <a href="/categories/{{category.id}}" class="btn btn-primary text-uppercase btn-lg mx">View More</a>
+    </div>
+  {% endif %}
+
+
+</main>
+
+
+
+<script>
+
+
+  var swiperCategories = new Swiper('.categories__container', {
+    spaceBetween: 24,
+    loop: true,
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    },
+    breakpoints: {
+      350: {
+        slidesPerView: 2,
+        spaceBetween: 24
+      },
+      768: {
+        slidesPerView: 3,
+        spaceBetween: 24
+      },
+      992: {
+        slidesPerView: 4,
+        spaceBetween: 24
+      },
+      1200: {
+        slidesPerView: 5,
+        spaceBetween: 24
+      },
+      1400: {
+        slidesPerView: 6,
+        spaceBetween: 24
+      }
+    }
+  });
+</script>

@@ -1,0 +1,47 @@
+<form class="address-form">
+  {% if address.id %}
+    <input hidden name="id" value="{{address.id}}">
+  {% endif %}
+  <div class="mb-3">
+    <label class="form-label">Name</label>
+    <input class="form-control form-control-lg" name="firstName" value="{{address.first_name}}">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Mobile number</label>
+    <input class="form-control form-control-lg" name="mobile" value="{{address.mobile}}">
+  </div>
+  <div class="mb-3">
+    <label for="lastName" class="form-label">Address</label>
+    <input class="form-control form-control-lg" name="address1" value="{{address.address1}}">
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label class="form-label">City</label>
+        <input class="form-control form-control-lg" name="city" value="{{address.city}}">
+      </div>
+    </div>
+    <div class="col">
+      <div class="mb-3">
+        <label class="form-label">State</label>
+        <input class="form-control form-control-lg" name="state" value="{{address.state}}">
+      </div>
+    </div>
+  </div>
+  <div class="row mb-4">
+    <div class="col">
+      <div>
+        <label class="form-label">Country</label>
+        <input class="form-control form-control-lg" name="country" value="{{address.country}}">
+      </div>
+    </div>
+    <div class="col">
+      <div>
+        <label class="form-label">Postal code</label>
+        <input class="form-control form-control-lg" name="zip" value="{{address.zip}}">
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-lg w-100 btn-primary text-uppercase">Save</button>
+
+</form>

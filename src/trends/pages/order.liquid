@@ -1,0 +1,63 @@
+{% layout "default.liquid" %}
+
+{% block content %}
+  <section class="breadcrumb">
+    <ul class="breadcrumb__list flex container">
+      <li>
+        <a href="/" class="breadcrumb__link">Home</a>
+      </li>
+      <li>
+        <span class="breadcrumb__link">></span>
+      </li>
+      <li>
+        <span class="breadcrumb__link">Orders</span>
+      </li>
+      <li>
+        <span class="breadcrumb__link">></span>
+      </li>
+      <li>
+        <span class="breadcrumb__link">{{ order.id }}</span>
+      </li>
+    </ul>
+  </section>
+  <div class="container py-5 my-5">
+    <div style="max-width: 900px" class="mx-auto">
+      <div class="d-flex flex-column flex-md-row align-items-md-center mb-4">
+        <h3 class="mb-3 mb-md-0">Order #{{ order.name }}</h3>
+        <h5 class="ms-md-3">
+          <span class="badge rounded-pill text-bg-dark">{{ order.status | capitalize }}</span>
+        </h5>
+      </div>
+      <div class="card p-4 p-md-5">
+        <h5>Items</h5>
+        <hr>
+        {% for item in order.items %}
+          <div class="d-flex align-items-center py-3">
+            <div class="border rounded-3 position-relative flex-shrink-0" style="width: 64px; height: 64px">
+              <span class="badge bg-secondary fw-normal rounded-circle position-absolute" style="right: -6px; top: -6px">{{ item.quantity }}</span>
+              <img
+                class="h-100 w-100 rounded-3"
+                src="{{item.image}}"
+                alt="">
+            </div>
+            <div class="px-3">
+              <div class="fw-semibold small">{{ item.name }}</div>
+              <div class="text-secondary small">{{ item.name }}</div>
+            </div>
+            <div class="ms-auto">{{ item.presentation_amount }}</div>
+          </div>
+        {% endfor %}
+        <h5 class="mt-4 mt-md-5">Shipping address</h5>
+        <hr>
+        {% assign address = order.shippingAddress %}
+        <div class="mb-3">
+          <div class="fw-semibold">{{ address.name }}</div>
+          <div>{{ address.mobile }}</div>
+          <div>{{ address.address }}, {{ address.city }}</div>
+          <div>{{ address.state }}, {{ address.country }}. {{ address.zip }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

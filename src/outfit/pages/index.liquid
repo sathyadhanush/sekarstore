@@ -1,0 +1,87 @@
+{% layout "default.liquid" %}
+
+{% block content %}
+  <div id="banners" class="banner-carousel carousel slide">
+    {% if banners.size > 1 %}
+      <div class="carousel-indicators">
+        {% for banner in configurations.banners %}
+          {% assign classnames = "" %}
+          {% if forloop.index0 == 0 %}
+            {% assign classnames = "active" %}
+          {% endif %}
+          <button type="button" data-bs-target="#banners" data-bs-slide-to="{{forloop.index0}}" class="{{classnames}}"></button>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <div class="carousel-inner">
+      {% for banner in configurations.banners %}
+        {% assign classnames = "carousel-item" %}
+        {% if forloop.index0 == 0 %}
+          {% assign classnames = "carousel-item active" %}
+        {% endif %}
+        <div class="{{classnames}}">
+          {% if banner.redirect_url %}
+            <a href="{{banner.redirect_url}}">
+              <img src="{{banner.image_url}}" class="d-block w-100">
+            </a>
+          {% else %}
+            <img src="{{banner.image_url}}" class="d-block w-100">
+          {% endif %}
+
+          {% if banner.caption %}
+            <div class="carousel-caption d-none d-md-block">
+              <div class="carousel-caption d-none d-md-block">
+                <h5>Second slide label</h5>
+                <p>Some representative placeholder content for the second slide.</p>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#banners" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#banners" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <div class="container">
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3 justify-content-evenly">
+      {% for feature in configurations.features %}
+        <div class="feature text-center col" style="width: fit-content;">
+          <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+            <img src="{{feature.image}}" class="bg-white" style="height: 170px" />
+          </div>
+          <h3 class="fs-4 text-body-emphasis">{{feature.title}}</h3>
+          <p class="ms-3 fs-4 text-center">{{feature.description}}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="mt-5">
+    {% for category in products limit: 1 %}
+      {% render 'products.liquid', products: category.products, title: category.name, product_count: category.product_count category: category %}
+    {% endfor %}
+  </div>
+  {% for section in configurations.sections %}
+    <section class="container py-4">
+      <div class="row justify-content-center align-items-center">
+        {% if section.image %}
+          <div class="col-12 col-md-6 text-center">
+            <img src="{{section.image}}" alt="" class="img-fluid">
+          </div>
+        {% endif %}
+        <div class="col-12 col-md-6 text-center">
+          <h2 class="fs-1 fw-bold">{{section.title}}</h2>
+          <p>{{section.description}}</p>
+        </div>
+      </div>
+    </section>
+    
+    
+    
+  {% endfor %}
+{% endblock %}

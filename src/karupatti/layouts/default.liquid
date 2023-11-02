@@ -1,0 +1,40 @@
+{% layout 'base.liquid' %}
+
+{% block body %}
+  {% render 'header.liquid' store: store, categories: categories, account: account, cart: cart %}
+
+  <div class="position-relative" style="padding-top: 70px">
+    <div
+      id="alert"
+      class="position-fixed w-100 start-0 alert d-none text-center bg-success fs-6 animate__animated animate__faster"
+      style="top: 70px"></div>
+  </div>
+
+  <div>
+    {% block content %}{% endblock %}
+  </div>
+
+  {% render 'footer.liquid' storeName: storeName, categories: categories, footer: footer %}
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    const $alert = document.getElementById('alert');
+
+    window.registerHandler('success', (message) => {
+      $alert.innerText = message;
+      $alert.classList.add('alert-primary', 'bg-primary', 'animate__fadeInDown');
+      $alert.classList.remove('d-none');
+      setTimeout(() => {
+        $alert.classList.remove('alert-primary', 'animate__fadeInDown');
+        $alert.classList.add('d-none');
+      }, 3000);
+    });
+
+    window.registerHandler('error', (message) => {
+      $alert.innerText = message;
+      $alert.classList.remove('d-none');
+      $alert.classList.add('alert-danger');
+    });
+  </script>
+{% endblock %}

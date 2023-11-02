@@ -1,0 +1,21 @@
+{% layout "default.liquid" %}
+
+{% block content %}
+
+          <section class="home section--lg">
+            <div class="home__container container grid">
+              <div class="home__content">
+                <span class="home__subtitle">promotions</span>
+                <h1 class="home__title">{{ storeName }}</h1>
+                <a href="/" class="btn btn-primary btn-lg text-uppercase">Shop Now</a>
+              </div>
+              <div class="home__img img-fluid">
+              <img src="{{ asset_url }}/images/home-img.png" >
+              </div>
+            </div>
+          </section>
+  </section>
+  {% for category in products %}
+    {% render 'products.liquid', products: category.products, title: category.name, product_count: category.product_count, category: category %}
+  {% endfor %}
+{% endblock %}

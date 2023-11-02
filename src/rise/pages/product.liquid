@@ -1,0 +1,110 @@
+{% layout "default.liquid" %}
+
+{% block content %}
+  <div class="container my-5 py-5" id="product-item">
+    <div class="row">
+      <div class="col-1 text-center px-4 thumnail-list" onclick="handleThumbnailClick(event)">
+        {% for media in product.media %}
+          {% if forloop.index == 1 %}
+            <button data-index="{{forloop.index | minus: 1 }}" class="btn mb-2 border p-1 border-dark">
+              <img src="{{ media.url }}" class="w-100">
+            </button>
+          {% else %}
+            <button data-index="{{forloop.index | minus: 1 }}" class="btn mb-2 border p-1">
+              <img src="{{ media.url }}" class="w-100">
+            </button>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="col-5">
+        <div style="height: 450px" class="text-center">
+          <img src="{{ product.media[0].url }}" class="h-100 product-image">
+        </div>
+      </div>
+      <div class="col-6 px-4">
+        <h1 class="h1 fw-bold">{{ product.name }}</h1>
+        <div class="mt-3 fw-bold fs-3" id="product-price">
+          ₹{{ product.variants[0].price }}
+        </div>
+
+        <div class="mt-4 bg-light p-4 rounded">
+          <div class="mt-2 fs-6">{{ product.description }}</div>
+        </div>
+
+        {% for option in product.options %}
+          <div class="mt-3 variant">
+            <div>{{ option.name }}</div>
+            <div class="d-flex mt-2">
+              {% for value in option.values %}
+                {% if value == option.values[0] %}
+                  <button id="{{value}}" class="border rounded py-3 px-4 me-2 border-dark bg-transparent">{{ value }}</button>
+                {% endif %}
+                {% if value != option.values[0] %}
+                  <button id="{{value}}" class="border rounded py-3 px-4 me-2 bg-transparent">{{ value }}</button>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+
+        <div class="mt-4">
+          <button data-action="add-to-cart" class="btn btn-primary btn-lg w-100 text-uppercase">
+            Add to Cart
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block pagescripts %}
+  <script>
+    window.__appState.product = {{ product | json }};
+    const $productPrice = document.getElementById('product-price');
+    const $variants = document.querySelectorAll('.variant button');
+
+    function getVariant() {
+      const attributes = [];
+      $variants.forEach(($variant) => {
+        if ($variant.classList.contains('border-dark')) {
+          attributes.push($variant.id);
+        }
+      });
+      return product.variants.find((variant) => variant.attributes.toString() === attributes.toString());
+    }
+
+    $variants.forEach(($variant) => {
+      $variant.addEventListener('click', (event) => {
+        event
+          .target
+          .parentElement
+          .children
+          .forEach((children) => {
+            children.classList.remove('border-dark', 'bg-light');
+          });
+        event.target.classList.add('border-dark', 'bg-light');
+
+        const variant = getVariant();
+        $productPrice.innerText = `₹${
+          variant.price
+        }`;
+      });
+    });
+
+    function handleThumbnailClick(event) {
+      const target = event.target.closest('button');
+      const {index} = target.dataset;
+      document.querySelector('.product-image').src = product.media[index].url;
+
+      document
+        .querySelectorAll('.thumnail-list button')
+        .forEach((element) => {
+          element.classList.remove('border-dark');
+        })
+        target
+        .classList
+        .add('border-dark');
+    }
+  </script>
+{% endblock %}

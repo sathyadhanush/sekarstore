@@ -1,0 +1,174 @@
+<header class="position-fixed top-0 w-100 bg-white sticky-header" style="z-index: 1030;">
+  <nav class="navbar container px-4">
+
+    <a class="navbar-brand h-100" href="/" >
+      <img src="{{ store.logo }}" class="h-100" />
+    </a>
+
+    <div class="d-none d-lg-flex me-auto ms-5 " >
+      <nav class="nav ">
+        <a href="/" class="link link-underline  link-underline-opacity-0 link-underline-opacity-100-hover link-offset-2 fw-bold">
+          Home
+        </a>
+
+        <div id="category-dropdown-trigger">
+          <a
+            class="ms-4 link link-underline link-underline-opacity-0 link-underline-opacity-100-hover link-offset-2 fw-bold" href="javascript:;">
+            <span>Categories</span>
+          </a>
+          {% render 'categories-dropdown.liquid' categories: categories  %}
+        </div>
+      </nav>
+    </div>
+
+    
+    <div class="header__search">
+      <input id="searchInput" type="text" placeholder="Search for items..." class="form-control" data-bs-toggle="offcanvas" data-bs-target="#searchOffcanvas" />
+      <button class="search__btn" id="searchButton">
+        <ion-icon class="ms-4" style="font-size: 22px;" name="search"></ion-icon>
+      </button>
+    </div>
+    
+
+    <div class="offcanvas offcanvas-top" tabindex="-1" id="searchOffcanvas" style="width: 100%; align-items:center; height: 8rem;">
+      <div class="header__search mt-4">
+        <input id="searchInput1" type="text" placeholder="Search for items..." class="form-control" />
+        <button class="search__btn" id="searchButton1">
+        <ion-icon class="ms-4" style="font-size: 22px;" name="search"></ion-icon>
+      </button>
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" style="position: absolute;
+      margin-left: 93rem;
+      margin-top: 1rem;"></button>
+    </div>
+ 
+    
+    
+    <div id="searchResults"></div>
+    <div class="d-flex align-items-center">
+      <a href="/cart" class="link-dark position-relative fs-3">
+        <ion-icon class="ms-4" name="bag-outline"></ion-icon> 
+        {% if cart.item_count > 0 %}
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-black text-white">
+          {{ cart.item_count }}
+        </span>
+      {% endif %}
+      </a>
+ 
+
+      <!-- Desktop Menu -->
+      <div class="d-none d-lg-flex">
+        <a href="/account" class="link-dark position-relative">
+          <ion-icon class="ms-4  fs-3"  name="person-circle-outline"></ion-icon>
+        </a>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div class="d-block d-lg-none">
+        <button class="btn ms-3" data-bs-toggle="offcanvas" data-bs-target="#navbar-offcanvas">
+          <ion-icon name="menu-outline"></ion-icon>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="navbar-offcanvas">
+          <div class="offcanvas-header p-1">
+            <button type="button" class="ms-auto btn" data-bs-dismiss="offcanvas">
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+          </div>
+      
+          <div class="offcanvas-body pt-0">
+            <div class="d-flex align-items-center ms-1 mt-2 mb-2">
+          </div>
+            <h6 class="px-2 fw-bold">Categories</h6>
+            <ul class="nav flex-column mb-4">
+              {% for category in categories %}
+              <li class="nav-item">
+                <a class="nav-link py-1 link-secondary active d-flex align-item-center"
+                  href="/categories/{{ category.id }}">
+                  {{ category.name }}
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                {% if cart.item_count > 0 %}
+                <a class="nav-link py-3 px-2 link-dark active d-flex align-item-center" href="/cart">
+                  <ion-icon class="me-3" name="bag-outline"></ion-icon>
+                  <span>Bag ({{ cart.item_count }})</span>
+                </a>
+                {% else %}
+                <a class="nav-link py-3 px-2 link-dark active d-flex align-item-center" href="/cart">
+                  <ion-icon class="me-3" name="bag-outline"></ion-icon>
+                  <span>Bag (0)</span>
+                </a>
+              {% endif %}
+              </li>
+              <li class="nav-item">
+                <a class="nav-link py-3 px-2 link-dark active d-flex align-item-center" href="/account/orders">
+                  <ion-icon class="me-3" name="cube-outline"></ion-icon>
+                  <span>Orders</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link py-3 px-2 link-dark active d-flex align-item-center" href="/account">
+                  <ion-icon class="me-3" name="person-circle-outline"></ion-icon>
+                  <span>Account</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+</header>
+<script>
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    navigateResults(e.key);
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    const selectedResult = searchResults.getElementsByTagName('li')[activeResult];
+    if (selectedResult) {
+      document.value = selectedResult.textContent;
+      searchResults.style.display = 'none';
+      const offcanvas = new bootstrap.Offcanvas(document.getElementById('searchOffcanvas'));
+      offcanvas.hide();
+    }
+  }
+});
+document.addEventListener('DOMContentLoaded', function() {
+  function handleSearchInput(searchInputId, searchButtonId) {
+    var storedKeyword = localStorage.getItem('searchKeyword');
+    if (storedKeyword) {
+      document.getElementById(searchInputId).value = storedKeyword;
+    }
+    document.getElementById(searchButtonId).addEventListener('click', function() {
+      var keyword = document.getElementById(searchInputId).value;
+      localStorage.setItem('searchKeyword', keyword);
+      var newURL = window.location.origin + window.location.pathname + '?keyword=' + keyword;
+      window.location.href = newURL;
+    });
+  }
+  handleSearchInput('searchInput', 'searchButton');
+  handleSearchInput('searchInput1', 'searchButton1');
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  var header = document.querySelector('.sticky-header');
+  var lastScrollY = window.scrollY;
+  window.addEventListener('scroll', function() {
+    var currentScrollY = window.scrollY;
+
+    if (currentScrollY > lastScrollY) {
+      header.classList.add('sticky');
+    } else {
+      header.classList.remove('sticky');
+    }
+
+    lastScrollY = currentScrollY;
+  });
+});
+</script>

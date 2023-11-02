@@ -1,0 +1,114 @@
+<header class="header">
+  <nav class="nav container">
+    <a href="/" class="nav__logo">
+
+      <h3 class="nav__logo-img">
+        <img src="{{ store.logo }}" /></h3>
+    </a>
+    <div class="nav__menu" id="nav-menu">
+      <ul class="nav__list">
+        <li class="nav__item">
+          <a href="/" class="nav__link ">Browse All</a>
+        </li>
+        <li
+          class="nav__item "
+          href="javascript:;"
+          id="category-dropdown-trigger">
+          <a href="/" class="nav__link ">Shop by Category
+          </a>
+          {% render 'categories-dropdown.liquid' categories: categories %}
+        </li>
+
+      </ul>
+
+
+      <div class="header__search">
+        <input
+          type="text"
+          placeholder="Search for items..."
+          class="form__input" />
+        <button class="search__btn">
+          <ion-icon
+            class="ms-4"
+            style="font-size: 22px;"
+            name="search"></ion-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center">
+      <a href="/cart" class="header__action-btn">
+        <ion-icon
+          class="ms-4"
+          style="font-size: 22px"
+          name="bag-outline"></ion-icon>
+        {% if cart.item_count > 0 %}
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-black text-white">
+            {{ cart.item_count }}
+          </span>
+        {% endif %}
+      </a>
+
+
+      <div class="d-none d-lg-flex">
+        <a href="/account" class="header__action-btn">
+          <ion-icon class="ms-4" name="person-circle-outline"></ion-icon>
+        </a>
+      </div>
+
+
+      <div class="d-block d-lg-none">
+        <button
+          class="ms-3 header__action-btn"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#navbar-offcanvas">
+          <ion-icon name="menu-outline"></ion-icon>
+        </button>
+
+        <div
+          class="offcanvas offcanvas-end"
+          tabindex="-1"
+          id="navbar-offcanvas">
+          <div class="offcanvas-header p-1">
+            <button type="button" data-bs-dismiss="offcanvas">
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+            <!--class="ms-auto btn"-->
+          </div>
+          <div class="offcanvas-body pt-0">
+            <h6 class="px-2 fw-bold">Shop by Category</h6>
+            <ul class="nav flex-column mb-4">
+              {% for category in categories %}
+                <li class="nav-item">
+                  <a class="nav-link py-1 link-secondary active d-flex align-item-center" href="/categories/{{ category.id }}">
+                    {{ category.name }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link py-3 px-2 link-dark active d-flex align-item-center" href="/cart">
+                  <ion-icon class="me-3" name="bag-outline"></ion-icon>
+                  <span>Bag</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link py-3 px-2 link-dark active d-flex align-item-center" href="/account/orders">
+                  <ion-icon class="me-3" name="cube-outline"></ion-icon>
+                  <span>Orders</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link py-3 px-2 link-dark active d-flex align-item-center" href="/account">
+                  <ion-icon class="me-3" name="person-circle-outline"></ion-icon>
+                  <span>Account</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

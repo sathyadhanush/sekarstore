@@ -1,0 +1,123 @@
+<header class="sticky-top bg-white border-bottom" style="z-index: 1030">
+  <nav class="container navbar px-3 py-4">
+    <div class="d-block d-xl-none">
+      <button class="btn px-0" data-bs-toggle="offcanvas" data-bs-target="#navbar-offcanvas">
+        <ion-icon name="menu-outline"></ion-icon>
+      </button>
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="navbar-offcanvas">
+        <div class="offcanvas-header p-1">
+          <button type="button" class="ms-auto btn" data-bs-dismiss="offcanvas">
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+        </div>
+        <div class="offcanvas-body p-0">
+          <ul class="nav flex-column">
+            <li class="nav-item px-4">
+              <a class="nav-link p-2 link-dark active d-flex align-item-center" href="/">
+                <span>Home</span>
+              </a>
+            </li>
+            <li class="nav-item px-4">
+              <a class="nav-link p-2 link-dark active d-flex align-item-center" href="/#section-1">
+                <span>About Us</span>
+              </a>
+            </li>
+            <li class="nav-item px-4">
+              <a class="nav-link p-2 link-dark active d-flex align-item-center" href="#contact">
+                <span>Contact</span>
+              </a>
+            </li>
+            <li class="nav-item px-4">
+              <a class="nav-link p-2 link-dark active d-flex align-item-center" href="/products">
+                <span>Products</span>
+              </a>
+            </li>
+          <li class="nav-item px-4">
+              <a class="nav-link p-2 link-dark active d-flex align-item-center" href="/cart">
+                <span>Bag</span>
+              </a>
+            </li>
+            <li class="nav-item px-4">
+              <a class="nav-link p-2 link-dark active d-flex align-item-center" href="/account/orders">
+                <span>Orders</span>
+              </a>
+            </li>
+            <li class="nav-item px-4">
+              <a class="nav-link p-2 link-dark active d-flex align-item-center" href="/account">
+                <span>Account</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    {% if store.logo %}
+      <a class="navbar-brand" style="max-width: 200px" href="/" >
+        <img src="{{ store.logo }}" class="w-100" />
+      </a>
+    {% else %}
+      <a class="navbar-brand" style="max-width: 200px" href="/" >
+        {{ store.name | upcase }}
+      </a>
+    {% endif %}
+
+    <div class="d-none d-xl-flex me-auto ms-5">
+      <nav class="nav gap-5">
+        <a href="/" class="link link-dark link-underline link-underline-opacity-0 link-underline-opacity-100-hover link-offset-3">
+          Home
+        </a>
+        <a
+          class="link link-dark link-underline link-underline-opacity-0 link-underline-opacity-100-hover link-offset-3" href="/products">
+          <span>Products</span>
+        </a>
+        <a
+          class="link link-dark link-underline link-underline-opacity-0 link-underline-opacity-100-hover link-offset-3" href="/#section-1">
+          <span>About Us</span>
+        </a>
+        <a
+          class="link link-dark link-underline link-underline-opacity-0 link-underline-opacity-100-hover link-offset-3" href="#contact">
+          <span>Contact</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="row rows-cols-3">
+      <div class="col">
+        <button class="btn btn-link link-dark p-0" data-bs-toggle="offcanvas" data-bs-target="#search-offcanvas">
+          <ion-icon name="search-outline"></ion-icon>
+        </button>
+        <div class="offcanvas offcanvas-top" tabindex="-1" id="search-offcanvas">
+          <div class="offcanvas-body container d-flex flex-column justify-content-center px-lg-5">
+            <div class="d-flex justify-content-center w-100">
+              <div class="input-group rounded-pill position-relative" style="max-width: 800px;">
+              <div class="form-floating">
+                <input class="form-control px-4 rounded-pill" placeholder="" data-field="search">
+                <label class="px-4" for="floatingInput">Search</label>
+              </div>
+              <span class="input-group-text rounded-pill border-0 bg-transparent position-absolute end-0 top-50 translate-middle-y" style="z-index: 99">
+                <ion-icon name="search-outline"></ion-icon>
+              </span>
+            </div>
+            <button type="button" data-bs-dismiss="offcanvas" class="btn btn-link text-decoration-none fw-bold text-black">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="/cart" class="col link-dark position-relative">
+        <ion-icon name="bag-outline"></ion-icon>
+        {% if cart.item_count > 0 %}
+          <span class="position-absolute translate-middle badge rounded-pill  text-bg-primary text-white">
+            {{ cart.item_count }}
+          </span>
+        {% endif %}
+      </a>
+
+      <a href="/account" class="d-none d-md-block col link-dark position-relative">
+        <ion-icon name="person-outline"></ion-icon>
+      </a>
+    </div>
+  </nav>
+
+</header>
